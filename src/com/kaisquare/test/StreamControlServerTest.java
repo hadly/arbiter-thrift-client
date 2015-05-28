@@ -46,7 +46,7 @@ public class StreamControlServerTest extends ArbiterServerTest {
 	    System.out.println("requestStreamForPlayback - " + requestStreamForPlayback);
 	    System.out.println("cancelStreamForPlayback - " + cancelStreamForPlayback);
 	    System.out.println("getRequestedStreamStatus - " + getRequestedStreamStatus);
-	    System.out.println("jump to the parent directory - " + JUMP_TO_PARENT_DIR);
+	    System.out.println("back - " + back);
 	    try {
 		int number = Integer.parseInt(input.next());
 		switch (number) {
@@ -77,7 +77,7 @@ public class StreamControlServerTest extends ArbiterServerTest {
 		    case getRequestedStreamStatus:
 			getRequestedStreamStatus();
 			break;
-		    case JUMP_TO_PARENT_DIR:
+		    case back:
 			log.debug("jump to the parent directory.");
 			jumpToParentDir = true;
 			break;

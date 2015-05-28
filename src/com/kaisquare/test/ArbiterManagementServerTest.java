@@ -35,7 +35,7 @@ public class ArbiterManagementServerTest extends ArbiterServerTest {
 	    System.out.println("sendTaskData - " + sendTaskData);
 	    System.out.println("sendEventData - " + sendEventData);
 	    System.out.println("getDeviceServer - " + getDeviceServer);
-	    System.out.println("jump to the parent directory - " + JUMP_TO_PARENT_DIR);
+	    System.out.println("back - " + back);
 	    try {
 		int number = Integer.parseInt(input.next());
 		switch (number) {
@@ -54,7 +54,7 @@ public class ArbiterManagementServerTest extends ArbiterServerTest {
 		    case getDeviceServer:
 			getDeviceServer();
 			break;
-		    case JUMP_TO_PARENT_DIR:
+		    case back:
 			log.debug("jump to the parent directory.");
 			jumpToParentDir = true;
 			break;

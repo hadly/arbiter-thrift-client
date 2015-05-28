@@ -15,7 +15,9 @@ public class Log4jUtil {
 
     public static boolean loadLog4jProperties() throws Exception {
 	try {
-	    String prefix = ".." + File.separator;
+	    //TODO:This is not the same one as that in Core Engine github
+//	    String prefix = ".." + File.separator;
+	    String prefix ="";
 	    String log4jPath = prefix + "log4j.properties";
 	    PropertyConfigurator.configure(log4jPath);
 	    return true;

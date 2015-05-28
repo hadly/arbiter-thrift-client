@@ -36,14 +36,14 @@ public class DeviceControlServerTest extends ArbiterServerTest {
 //	    final int readData = 11;
 	    log.debug("select the function:");
 	    System.out.println("getDeviceStatus - " + getDeviceStatus);
-	    System.out.println("jump to the parent directory - " + JUMP_TO_PARENT_DIR);
+	    System.out.println("back - " + back);
 	    try {
 		int number = Integer.parseInt(input.next());
 		switch (number) {
 		    case getDeviceStatus:
 			getDeviceStatus();
 			break;
-		    case JUMP_TO_PARENT_DIR:
+		    case back:
 			log.debug("jump to the parent directory.");
 			jumpToParentDir = true;
 			break;

@@ -34,7 +34,7 @@ public class ConfigControlServerTest extends ArbiterServerTest {
 	    System.out.println("setChunkSize - " + setChunkSize);
 	    System.out.println("setReservedSpace - " + setReservedSpace);
 	    System.out.println("setCloudServer - " + setCloudServer);
-	    System.out.println("jump to the parent directory - " + JUMP_TO_PARENT_DIR);
+	    System.out.println("back - " + back);
 	    try {
 		int number = Integer.parseInt(input.next());
 		switch (number) {
@@ -53,7 +53,7 @@ public class ConfigControlServerTest extends ArbiterServerTest {
 		    case setCloudServer:
 			setCloudServer();
 			break;
-		    case JUMP_TO_PARENT_DIR:
+		    case back:
 			log.debug("jump to the parent directory.");
 			jumpToParentDir = true;
 			break;

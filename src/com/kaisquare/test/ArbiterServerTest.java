@@ -22,7 +22,7 @@ public class ArbiterServerTest {
     public static int timeout = 10000;
     public static int numTries = 1;
     public static int delay = 5000;
-    public static final int JUMP_TO_PARENT_DIR = 0;
+    public static final int back = 0;
     public static final int EXIT = 0;
     public static Scanner input = new Scanner(System.in);
     //--------service name definition
@@ -38,9 +38,9 @@ public class ArbiterServerTest {
     public static final int ARBITER_MANAGEMENT_SERVER_PORT = 10771;
     public static final int STREAM_CONTROL_SERVER_PORT = 10600;
     public static final int DEVICE_CONTROL_SERVER_PORT = 10604;
-    public static final int DEVICE_MANAGEMENT_SERVER_PORT = 10889;
-    public static final int DATA_SERVER_PORT = 10888;
-    public static final int CONFIG_CONTROL_SERVER_PORT = 10887;
+    public static final int DEVICE_MANAGEMENT_SERVER_PORT = 10689;
+    public static final int DATA_SERVER_PORT = 10688;
+    public static final int CONFIG_CONTROL_SERVER_PORT = 10687;
     public static final int NODE_CONTROL_SERVER_PORT = 18001;
     //########service port definition
 
@@ -53,9 +53,19 @@ public class ArbiterServerTest {
 	StreamControlServerTest server = new StreamControlServerTest();
 	server.process();
     }
-    
-    private static void processConfigControl(){
+
+    private static void processConfigControl() {
 	ConfigControlServerTest server = new ConfigControlServerTest();
+	server.process();
+    }
+
+    private static void processDeviceMngServer() {
+	DeviceManagementServerTest server = new DeviceManagementServerTest();
+	server.process();
+    }
+
+    private static void processDeviceControl() {
+	DeviceControlServerTest server = new DeviceControlServerTest();
 	server.process();
     }
 
@@ -63,10 +73,27 @@ public class ArbiterServerTest {
 	log.debug("this is the process function in ArbiterServerTest.");
     }
 
+    private static void welcome() {
+	System.out.println("This is a thrift client that can call the functions in arbiter service.");
+	System.out.println("Available for Core Engine V5.");
+	System.out.println("Arbiter services and ports:");
+	System.out.println("#############################");
+	System.out.println("ArbiterManagementServer - " + ARBITER_MANAGEMENT_SERVER_PORT);
+	System.out.println("StreamControlServer - " + STREAM_CONTROL_SERVER_PORT);
+	System.out.println("DeviceControlServer - " + DEVICE_CONTROL_SERVER_PORT);
+	System.out.println("DeviceManagementServer - " + DEVICE_MANAGEMENT_SERVER_PORT);
+	System.out.println("DataServer - " + DATA_SERVER_PORT);
+	System.out.println("ConfigControlServer - " + CONFIG_CONTROL_SERVER_PORT);
+	System.out.println("NodeControlServer - " + NODE_CONTROL_SERVER_PORT);
+	System.out.println("#############################\n");
+    }
+
     //for general purpose of adding device or update device,execute the below function
     public static void main(String[] args) throws Exception {
 	Log4jUtil.loadLog4jProperties();
-	log.debug("please input the destination host:");
+	welcome();
+	log.debug("please input the arbiter server host:");
+	System.out.print("arbiter-host=");
 	host = input.next();
 
 	boolean exit = false;
@@ -74,8 +101,8 @@ public class ArbiterServerTest {
 	    log.debug("select the service:");
 	    System.out.println("ArbiterManagementServer - " + ARBITER_MANAGEMENT_SERVER);
 	    System.out.println("StreamControlServer - " + STREAM_CONTROL_SERVER);
-//	    System.out.println("DeviceControlServer - " + DEVICE_CONTROL_SERVER);
-//	    System.out.println("DeviceManagementServer - " + DEVICE_MANAGEMENT_SERVER);
+	    System.out.println("DeviceControlServer - " + DEVICE_CONTROL_SERVER);
+	    System.out.println("DeviceManagementServer - " + DEVICE_MANAGEMENT_SERVER);
 //	    System.out.println("DataServer - " + DATA_SERVER);
 	    System.out.println("ConfigControlServer - " + CONFIG_CONTROL_SERVER);
 //	    System.out.println("NodeControlServer - " + NODE_CONTROL_SERVER);
@@ -90,10 +117,10 @@ public class ArbiterServerTest {
 			processStreamControl();
 			break;
 		    case DEVICE_CONTROL_SERVER:
-//			processDeviceControl();
+			processDeviceControl();
 			break;
 		    case DEVICE_MANAGEMENT_SERVER:
-//			processDeviceMngServer();
+			processDeviceMngServer();
 			break;
 		    case DATA_SERVER:
 //			processDataServer();
@@ -186,7 +213,6 @@ public class ArbiterServerTest {
 	boolean result = iface.sendEventData(deviceId, channel, eventType, eventTime, stringData, null);
 	log.info("result=" + result);
     }
-
 //    private static void sendTaskData(ArbiterManagementService.Iface iface) throws TException {
 //	long deviceId = 3;
 //	int channel = 0;
