@@ -1,0 +1,1 @@
+java -Xmx512m -cp ./dist/*:./dist/lib/* com.kaisquare.test.ArbiterServerTest
