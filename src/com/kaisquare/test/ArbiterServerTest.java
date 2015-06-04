@@ -33,6 +33,7 @@ public class ArbiterServerTest {
     private static final int DATA_SERVER = 5;
     private static final int CONFIG_CONTROL_SERVER = 6;
     private static final int NODE_CONTROL_SERVER = 7;
+    private static final int WATERWAY_CRUISE_SERVER = 8;
     //--------service name definition
     //########service port definition
     public static final int ARBITER_MANAGEMENT_SERVER_PORT = 10771;
@@ -42,6 +43,7 @@ public class ArbiterServerTest {
     public static final int DATA_SERVER_PORT = 10688;
     public static final int CONFIG_CONTROL_SERVER_PORT = 10687;
     public static final int NODE_CONTROL_SERVER_PORT = 18001;
+    public static final int WATERWAY_CRUISE_SERVER_PORT = 18002;
     //########service port definition
 
     private static void processArbiterManagement() {
@@ -69,6 +71,11 @@ public class ArbiterServerTest {
 	server.process();
     }
 
+    private static void processWaterwayCruiseServer() {
+	WaterwayCruiseServerTest server = new WaterwayCruiseServerTest();
+	server.process();
+    }
+
     public void process() {
 	log.debug("this is the process function in ArbiterServerTest.");
     }
@@ -85,6 +92,7 @@ public class ArbiterServerTest {
 	System.out.println("DataServer - " + DATA_SERVER_PORT);
 	System.out.println("ConfigControlServer - " + CONFIG_CONTROL_SERVER_PORT);
 	System.out.println("NodeControlServer - " + NODE_CONTROL_SERVER_PORT);
+	System.out.println("WaterwayCruiseServer(V4) - " + WATERWAY_CRUISE_SERVER_PORT);
 	System.out.println("#############################\n");
     }
 
@@ -106,6 +114,7 @@ public class ArbiterServerTest {
 //	    System.out.println("DataServer - " + DATA_SERVER);
 	    System.out.println("ConfigControlServer - " + CONFIG_CONTROL_SERVER);
 //	    System.out.println("NodeControlServer - " + NODE_CONTROL_SERVER);
+	    System.out.println("WaterwayCruiseServer(V4) - " + WATERWAY_CRUISE_SERVER);
 	    System.out.println("exit - 0");
 	    try {
 		int number = Integer.parseInt(input.next());
@@ -130,6 +139,9 @@ public class ArbiterServerTest {
 			break;
 		    case NODE_CONTROL_SERVER:
 //			processNodeControl();
+			break;
+		    case WATERWAY_CRUISE_SERVER:
+			processWaterwayCruiseServer();
 			break;
 		    case EXIT:
 			exit = true;
