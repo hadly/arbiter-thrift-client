@@ -33,6 +33,7 @@ import org.slf4j.LoggerFactory;
  * (2) channelId - The channel ID
  * (3) from - The timestamp when media was started (ddMMyyyyHHmmss format)
  * (4) to - The timestamp when media was stoped (ddMMyyyyHHmmss format)
+ * (5) path - The absolute path of the media file.
  */
 public class RecordedMediaInfo implements org.apache.thrift.TBase<RecordedMediaInfo, RecordedMediaInfo._Fields>, java.io.Serializable, Cloneable {
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("RecordedMediaInfo");
@@ -41,6 +42,7 @@ public class RecordedMediaInfo implements org.apache.thrift.TBase<RecordedMediaI
   private static final org.apache.thrift.protocol.TField CHANNEL_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("channelId", org.apache.thrift.protocol.TType.STRING, (short)2);
   private static final org.apache.thrift.protocol.TField FROM_FIELD_DESC = new org.apache.thrift.protocol.TField("from", org.apache.thrift.protocol.TType.STRING, (short)3);
   private static final org.apache.thrift.protocol.TField TO_FIELD_DESC = new org.apache.thrift.protocol.TField("to", org.apache.thrift.protocol.TType.STRING, (short)4);
+  private static final org.apache.thrift.protocol.TField PATH_FIELD_DESC = new org.apache.thrift.protocol.TField("path", org.apache.thrift.protocol.TType.STRING, (short)5);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
@@ -52,13 +54,15 @@ public class RecordedMediaInfo implements org.apache.thrift.TBase<RecordedMediaI
   public String channelId; // required
   public String from; // required
   public String to; // required
+  public String path; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
     DEVICE_ID((short)1, "deviceId"),
     CHANNEL_ID((short)2, "channelId"),
     FROM((short)3, "from"),
-    TO((short)4, "to");
+    TO((short)4, "to"),
+    PATH((short)5, "path");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -81,6 +85,8 @@ public class RecordedMediaInfo implements org.apache.thrift.TBase<RecordedMediaI
           return FROM;
         case 4: // TO
           return TO;
+        case 5: // PATH
+          return PATH;
         default:
           return null;
       }
@@ -132,6 +138,8 @@ public class RecordedMediaInfo implements org.apache.thrift.TBase<RecordedMediaI
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.TO, new org.apache.thrift.meta_data.FieldMetaData("to", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.PATH, new org.apache.thrift.meta_data.FieldMetaData("path", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(RecordedMediaInfo.class, metaDataMap);
   }
@@ -143,13 +151,15 @@ public class RecordedMediaInfo implements org.apache.thrift.TBase<RecordedMediaI
     String deviceId,
     String channelId,
     String from,
-    String to)
+    String to,
+    String path)
   {
     this();
     this.deviceId = deviceId;
     this.channelId = channelId;
     this.from = from;
     this.to = to;
+    this.path = path;
   }
 
   /**
@@ -168,6 +178,9 @@ public class RecordedMediaInfo implements org.apache.thrift.TBase<RecordedMediaI
     if (other.isSetTo()) {
       this.to = other.to;
     }
+    if (other.isSetPath()) {
+      this.path = other.path;
+    }
   }
 
   public RecordedMediaInfo deepCopy() {
@@ -180,6 +193,7 @@ public class RecordedMediaInfo implements org.apache.thrift.TBase<RecordedMediaI
     this.channelId = null;
     this.from = null;
     this.to = null;
+    this.path = null;
   }
 
   public String getDeviceId() {
@@ -278,6 +292,30 @@ public class RecordedMediaInfo implements org.apache.thrift.TBase<RecordedMediaI
     }
   }
 
+  public String getPath() {
+    return this.path;
+  }
+
+  public RecordedMediaInfo setPath(String path) {
+    this.path = path;
+    return this;
+  }
+
+  public void unsetPath() {
+    this.path = null;
+  }
+
+  /** Returns true if field path is set (has been assigned a value) and false otherwise */
+  public boolean isSetPath() {
+    return this.path != null;
+  }
+
+  public void setPathIsSet(boolean value) {
+    if (!value) {
+      this.path = null;
+    }
+  }
+
   public void setFieldValue(_Fields field, Object value) {
     switch (field) {
     case DEVICE_ID:
@@ -312,6 +350,14 @@ public class RecordedMediaInfo implements org.apache.thrift.TBase<RecordedMediaI
       }
       break;
 
+    case PATH:
+      if (value == null) {
+        unsetPath();
+      } else {
+        setPath((String)value);
+      }
+      break;
+
     }
   }
 
@@ -328,6 +374,9 @@ public class RecordedMediaInfo implements org.apache.thrift.TBase<RecordedMediaI
 
     case TO:
       return getTo();
+
+    case PATH:
+      return getPath();
 
     }
     throw new IllegalStateException();
@@ -348,6 +397,8 @@ public class RecordedMediaInfo implements org.apache.thrift.TBase<RecordedMediaI
       return isSetFrom();
     case TO:
       return isSetTo();
+    case PATH:
+      return isSetPath();
     }
     throw new IllegalStateException();
   }
@@ -398,6 +449,15 @@ public class RecordedMediaInfo implements org.apache.thrift.TBase<RecordedMediaI
       if (!(this_present_to && that_present_to))
         return false;
       if (!this.to.equals(that.to))
+        return false;
+    }
+
+    boolean this_present_path = true && this.isSetPath();
+    boolean that_present_path = true && that.isSetPath();
+    if (this_present_path || that_present_path) {
+      if (!(this_present_path && that_present_path))
+        return false;
+      if (!this.path.equals(that.path))
         return false;
     }
 
@@ -457,6 +517,16 @@ public class RecordedMediaInfo implements org.apache.thrift.TBase<RecordedMediaI
         return lastComparison;
       }
     }
+    lastComparison = Boolean.valueOf(isSetPath()).compareTo(typedOther.isSetPath());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetPath()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.path, typedOther.path);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
     return 0;
   }
 
@@ -506,6 +576,14 @@ public class RecordedMediaInfo implements org.apache.thrift.TBase<RecordedMediaI
       sb.append("null");
     } else {
       sb.append(this.to);
+    }
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("path:");
+    if (this.path == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.path);
     }
     first = false;
     sb.append(")");
@@ -582,6 +660,14 @@ public class RecordedMediaInfo implements org.apache.thrift.TBase<RecordedMediaI
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
+          case 5: // PATH
+            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+              struct.path = iprot.readString();
+              struct.setPathIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
           default:
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
         }
@@ -617,6 +703,11 @@ public class RecordedMediaInfo implements org.apache.thrift.TBase<RecordedMediaI
         oprot.writeString(struct.to);
         oprot.writeFieldEnd();
       }
+      if (struct.path != null) {
+        oprot.writeFieldBegin(PATH_FIELD_DESC);
+        oprot.writeString(struct.path);
+        oprot.writeFieldEnd();
+      }
       oprot.writeFieldStop();
       oprot.writeStructEnd();
     }
@@ -647,7 +738,10 @@ public class RecordedMediaInfo implements org.apache.thrift.TBase<RecordedMediaI
       if (struct.isSetTo()) {
         optionals.set(3);
       }
-      oprot.writeBitSet(optionals, 4);
+      if (struct.isSetPath()) {
+        optionals.set(4);
+      }
+      oprot.writeBitSet(optionals, 5);
       if (struct.isSetDeviceId()) {
         oprot.writeString(struct.deviceId);
       }
@@ -660,12 +754,15 @@ public class RecordedMediaInfo implements org.apache.thrift.TBase<RecordedMediaI
       if (struct.isSetTo()) {
         oprot.writeString(struct.to);
       }
+      if (struct.isSetPath()) {
+        oprot.writeString(struct.path);
+      }
     }
 
     @Override
     public void read(org.apache.thrift.protocol.TProtocol prot, RecordedMediaInfo struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
-      BitSet incoming = iprot.readBitSet(4);
+      BitSet incoming = iprot.readBitSet(5);
       if (incoming.get(0)) {
         struct.deviceId = iprot.readString();
         struct.setDeviceIdIsSet(true);
@@ -681,6 +778,10 @@ public class RecordedMediaInfo implements org.apache.thrift.TBase<RecordedMediaI
       if (incoming.get(3)) {
         struct.to = iprot.readString();
         struct.setToIsSet(true);
+      }
+      if (incoming.get(4)) {
+        struct.path = iprot.readString();
+        struct.setPathIsSet(true);
       }
     }
   }

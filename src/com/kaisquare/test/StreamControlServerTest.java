@@ -35,7 +35,7 @@ public class StreamControlServerTest extends ArbiterServerTest {
 	    final int getStorageStatus = 6;
 	    final int requestStreamForPlayback = 7;
 	    final int cancelStreamForPlayback = 8;
-	    final int getRequestedStreamStatus = 9;
+	    final int getStreamFileDetails = 9;
 	    log.debug("select the function:");
 	    System.out.println("beginStreamSession - " + beginStreamSession);
 	    System.out.println("keepStreamSessionAlive - " + keepStreamSessionAlive);
@@ -45,7 +45,7 @@ public class StreamControlServerTest extends ArbiterServerTest {
 	    System.out.println("getStorageStatus - " + getStorageStatus);
 	    System.out.println("requestStreamForPlayback - " + requestStreamForPlayback);
 	    System.out.println("cancelStreamForPlayback - " + cancelStreamForPlayback);
-	    System.out.println("getRequestedStreamStatus - " + getRequestedStreamStatus);
+	    System.out.println("getStreamFileDetails - " + getStreamFileDetails);
 	    System.out.println("back - " + back);
 	    try {
 		int number = Integer.parseInt(input.next());
@@ -74,8 +74,8 @@ public class StreamControlServerTest extends ArbiterServerTest {
 		    case cancelStreamForPlayback:
 			cancelStreamForPlayback();
 			break;
-		    case getRequestedStreamStatus:
-			getRequestedStreamStatus();
+		    case getStreamFileDetails:
+			getStreamFileDetails();
 			break;
 		    case back:
 			log.debug("jump to the parent directory.");
@@ -225,8 +225,8 @@ public class StreamControlServerTest extends ArbiterServerTest {
 	}
     }
 
-    private void getRequestedStreamStatus() throws TTransportException, CoreException, TException {
-	System.out.println("getRequestedStreamStatus(String sessionId, String deviceId, String channelId, String mediaType, String action, String startTime, String endTime)");
+    private void getStreamFileDetails() throws TTransportException, CoreException, TException {
+	System.out.println("getStreamFileDetails(String sessionId, String deviceId, String channelId, String mediaType, String action, String startTime, String endTime)");
 	System.out.println("E.g., - session1 29 0 video play 27052012135700 27052012145700");
 	String sessionId = input.next();
 	String deviceId = input.next();
@@ -238,7 +238,7 @@ public class StreamControlServerTest extends ArbiterServerTest {
 	ThriftUtil.Client<StreamControlService.Iface> client = null;
 	try {
 	    client = getThriftClient();
-	    List<com.kaisquare.core.thrift.StreamFileDetails> result = client.getIface().getRequestedStreamStatus(
+	    List<com.kaisquare.core.thrift.StreamFileDetails> result = client.getIface().getStreamFileDetails(
 		    sessionId, deviceId, channel, type, action, startTime, endTime);
 	    log.debug("result=" + result);
 	} finally {

@@ -176,10 +176,9 @@ public class StreamControlService {
     public boolean cancelStreamForPlayback(String sessionId, String deviceId, String channelId, String mediaType, List<String> fileTime) throws CoreException, org.apache.thrift.TException;
 
     /**
-     * Get the stream's uploading status. When requestVideoForPlayback() returns TRUE,
-     * Platform can call this method to get the uploading progress of the streams.
+     * Get stream file's details. Such as file size, create time and uploading progress.
      * 
-     * (1) sessionId - A handle for this session for future reference.
+     * (1) sessionId - A handle for this session for future reference (not used currently).
      * (2) deviceId - Device ID.
      * (3) channelId - Normal Device's channel ID or Node Device's deviceId on this Node.
      * (4) mediaType - Media type. Valid values are: "video" "image".
@@ -187,7 +186,7 @@ public class StreamControlService {
      * (6) startTimestamp - Start date/time from where the stream should begin (ddMMyyyyHHmmss format).
      * (7) endTimestamp - End date/time from where the stream should end (ddMMyyyyHHmmss format).
      * 
-     * Returns list of stream file status.
+     * Returns list of stream file details.
      * 
      * @param sessionId
      * @param deviceId
@@ -197,7 +196,7 @@ public class StreamControlService {
      * @param startTimestamp
      * @param endTimestamp
      */
-    public List<com.kaisquare.core.thrift.StreamFileDetails> getRequestedStreamStatus(String sessionId, String deviceId, String channelId, String mediaType, String action, String startTimestamp, String endTimestamp) throws CoreException, org.apache.thrift.TException;
+    public List<com.kaisquare.core.thrift.StreamFileDetails> getStreamFileDetails(String sessionId, String deviceId, String channelId, String mediaType, String action, String startTimestamp, String endTimestamp) throws CoreException, org.apache.thrift.TException;
 
   }
 
@@ -219,7 +218,7 @@ public class StreamControlService {
 
     public void cancelStreamForPlayback(String sessionId, String deviceId, String channelId, String mediaType, List<String> fileTime, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.cancelStreamForPlayback_call> resultHandler) throws org.apache.thrift.TException;
 
-    public void getRequestedStreamStatus(String sessionId, String deviceId, String channelId, String mediaType, String action, String startTimestamp, String endTimestamp, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.getRequestedStreamStatus_call> resultHandler) throws org.apache.thrift.TException;
+    public void getStreamFileDetails(String sessionId, String deviceId, String channelId, String mediaType, String action, String startTimestamp, String endTimestamp, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.getStreamFileDetails_call> resultHandler) throws org.apache.thrift.TException;
 
   }
 
@@ -471,15 +470,15 @@ public class StreamControlService {
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "cancelStreamForPlayback failed: unknown result");
     }
 
-    public List<com.kaisquare.core.thrift.StreamFileDetails> getRequestedStreamStatus(String sessionId, String deviceId, String channelId, String mediaType, String action, String startTimestamp, String endTimestamp) throws CoreException, org.apache.thrift.TException
+    public List<com.kaisquare.core.thrift.StreamFileDetails> getStreamFileDetails(String sessionId, String deviceId, String channelId, String mediaType, String action, String startTimestamp, String endTimestamp) throws CoreException, org.apache.thrift.TException
     {
-      send_getRequestedStreamStatus(sessionId, deviceId, channelId, mediaType, action, startTimestamp, endTimestamp);
-      return recv_getRequestedStreamStatus();
+      send_getStreamFileDetails(sessionId, deviceId, channelId, mediaType, action, startTimestamp, endTimestamp);
+      return recv_getStreamFileDetails();
     }
 
-    public void send_getRequestedStreamStatus(String sessionId, String deviceId, String channelId, String mediaType, String action, String startTimestamp, String endTimestamp) throws org.apache.thrift.TException
+    public void send_getStreamFileDetails(String sessionId, String deviceId, String channelId, String mediaType, String action, String startTimestamp, String endTimestamp) throws org.apache.thrift.TException
     {
-      getRequestedStreamStatus_args args = new getRequestedStreamStatus_args();
+      getStreamFileDetails_args args = new getStreamFileDetails_args();
       args.setSessionId(sessionId);
       args.setDeviceId(deviceId);
       args.setChannelId(channelId);
@@ -487,20 +486,20 @@ public class StreamControlService {
       args.setAction(action);
       args.setStartTimestamp(startTimestamp);
       args.setEndTimestamp(endTimestamp);
-      sendBase("getRequestedStreamStatus", args);
+      sendBase("getStreamFileDetails", args);
     }
 
-    public List<com.kaisquare.core.thrift.StreamFileDetails> recv_getRequestedStreamStatus() throws CoreException, org.apache.thrift.TException
+    public List<com.kaisquare.core.thrift.StreamFileDetails> recv_getStreamFileDetails() throws CoreException, org.apache.thrift.TException
     {
-      getRequestedStreamStatus_result result = new getRequestedStreamStatus_result();
-      receiveBase(result, "getRequestedStreamStatus");
+      getStreamFileDetails_result result = new getStreamFileDetails_result();
+      receiveBase(result, "getStreamFileDetails");
       if (result.isSetSuccess()) {
         return result.success;
       }
       if (result.coreExp != null) {
         throw result.coreExp;
       }
-      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "getRequestedStreamStatus failed: unknown result");
+      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "getStreamFileDetails failed: unknown result");
     }
 
   }
@@ -837,14 +836,14 @@ public class StreamControlService {
       }
     }
 
-    public void getRequestedStreamStatus(String sessionId, String deviceId, String channelId, String mediaType, String action, String startTimestamp, String endTimestamp, org.apache.thrift.async.AsyncMethodCallback<getRequestedStreamStatus_call> resultHandler) throws org.apache.thrift.TException {
+    public void getStreamFileDetails(String sessionId, String deviceId, String channelId, String mediaType, String action, String startTimestamp, String endTimestamp, org.apache.thrift.async.AsyncMethodCallback<getStreamFileDetails_call> resultHandler) throws org.apache.thrift.TException {
       checkReady();
-      getRequestedStreamStatus_call method_call = new getRequestedStreamStatus_call(sessionId, deviceId, channelId, mediaType, action, startTimestamp, endTimestamp, resultHandler, this, ___protocolFactory, ___transport);
+      getStreamFileDetails_call method_call = new getStreamFileDetails_call(sessionId, deviceId, channelId, mediaType, action, startTimestamp, endTimestamp, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
       ___manager.call(method_call);
     }
 
-    public static class getRequestedStreamStatus_call extends org.apache.thrift.async.TAsyncMethodCall {
+    public static class getStreamFileDetails_call extends org.apache.thrift.async.TAsyncMethodCall {
       private String sessionId;
       private String deviceId;
       private String channelId;
@@ -852,7 +851,7 @@ public class StreamControlService {
       private String action;
       private String startTimestamp;
       private String endTimestamp;
-      public getRequestedStreamStatus_call(String sessionId, String deviceId, String channelId, String mediaType, String action, String startTimestamp, String endTimestamp, org.apache.thrift.async.AsyncMethodCallback<getRequestedStreamStatus_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      public getStreamFileDetails_call(String sessionId, String deviceId, String channelId, String mediaType, String action, String startTimestamp, String endTimestamp, org.apache.thrift.async.AsyncMethodCallback<getStreamFileDetails_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
         this.sessionId = sessionId;
         this.deviceId = deviceId;
@@ -864,8 +863,8 @@ public class StreamControlService {
       }
 
       public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
-        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("getRequestedStreamStatus", org.apache.thrift.protocol.TMessageType.CALL, 0));
-        getRequestedStreamStatus_args args = new getRequestedStreamStatus_args();
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("getStreamFileDetails", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        getStreamFileDetails_args args = new getStreamFileDetails_args();
         args.setSessionId(sessionId);
         args.setDeviceId(deviceId);
         args.setChannelId(channelId);
@@ -883,7 +882,7 @@ public class StreamControlService {
         }
         org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
         org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
-        return (new Client(prot)).recv_getRequestedStreamStatus();
+        return (new Client(prot)).recv_getStreamFileDetails();
       }
     }
 
@@ -908,7 +907,7 @@ public class StreamControlService {
       processMap.put("getStorageStatus", new getStorageStatus());
       processMap.put("requestStreamForPlayback", new requestStreamForPlayback());
       processMap.put("cancelStreamForPlayback", new cancelStreamForPlayback());
-      processMap.put("getRequestedStreamStatus", new getRequestedStreamStatus());
+      processMap.put("getStreamFileDetails", new getStreamFileDetails());
       return processMap;
     }
 
@@ -1076,19 +1075,19 @@ public class StreamControlService {
       }
     }
 
-    private static class getRequestedStreamStatus<I extends Iface> extends org.apache.thrift.ProcessFunction<I, getRequestedStreamStatus_args> {
-      public getRequestedStreamStatus() {
-        super("getRequestedStreamStatus");
+    private static class getStreamFileDetails<I extends Iface> extends org.apache.thrift.ProcessFunction<I, getStreamFileDetails_args> {
+      public getStreamFileDetails() {
+        super("getStreamFileDetails");
       }
 
-      protected getRequestedStreamStatus_args getEmptyArgsInstance() {
-        return new getRequestedStreamStatus_args();
+      protected getStreamFileDetails_args getEmptyArgsInstance() {
+        return new getStreamFileDetails_args();
       }
 
-      protected getRequestedStreamStatus_result getResult(I iface, getRequestedStreamStatus_args args) throws org.apache.thrift.TException {
-        getRequestedStreamStatus_result result = new getRequestedStreamStatus_result();
+      protected getStreamFileDetails_result getResult(I iface, getStreamFileDetails_args args) throws org.apache.thrift.TException {
+        getStreamFileDetails_result result = new getStreamFileDetails_result();
         try {
-          result.success = iface.getRequestedStreamStatus(args.sessionId, args.deviceId, args.channelId, args.mediaType, args.action, args.startTimestamp, args.endTimestamp);
+          result.success = iface.getStreamFileDetails(args.sessionId, args.deviceId, args.channelId, args.mediaType, args.action, args.startTimestamp, args.endTimestamp);
         } catch (CoreException coreExp) {
           result.coreExp = coreExp;
         }
@@ -9902,8 +9901,8 @@ public class StreamControlService {
 
   }
 
-  public static class getRequestedStreamStatus_args implements org.apache.thrift.TBase<getRequestedStreamStatus_args, getRequestedStreamStatus_args._Fields>, java.io.Serializable, Cloneable   {
-    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getRequestedStreamStatus_args");
+  public static class getStreamFileDetails_args implements org.apache.thrift.TBase<getStreamFileDetails_args, getStreamFileDetails_args._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getStreamFileDetails_args");
 
     private static final org.apache.thrift.protocol.TField SESSION_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("sessionId", org.apache.thrift.protocol.TType.STRING, (short)1);
     private static final org.apache.thrift.protocol.TField DEVICE_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("deviceId", org.apache.thrift.protocol.TType.STRING, (short)2);
@@ -9915,8 +9914,8 @@ public class StreamControlService {
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
-      schemes.put(StandardScheme.class, new getRequestedStreamStatus_argsStandardSchemeFactory());
-      schemes.put(TupleScheme.class, new getRequestedStreamStatus_argsTupleSchemeFactory());
+      schemes.put(StandardScheme.class, new getStreamFileDetails_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new getStreamFileDetails_argsTupleSchemeFactory());
     }
 
     public String sessionId; // required
@@ -10022,13 +10021,13 @@ public class StreamControlService {
       tmpMap.put(_Fields.END_TIMESTAMP, new org.apache.thrift.meta_data.FieldMetaData("endTimestamp", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
-      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getRequestedStreamStatus_args.class, metaDataMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getStreamFileDetails_args.class, metaDataMap);
     }
 
-    public getRequestedStreamStatus_args() {
+    public getStreamFileDetails_args() {
     }
 
-    public getRequestedStreamStatus_args(
+    public getStreamFileDetails_args(
       String sessionId,
       String deviceId,
       String channelId,
@@ -10050,7 +10049,7 @@ public class StreamControlService {
     /**
      * Performs a deep copy on <i>other</i>.
      */
-    public getRequestedStreamStatus_args(getRequestedStreamStatus_args other) {
+    public getStreamFileDetails_args(getStreamFileDetails_args other) {
       if (other.isSetSessionId()) {
         this.sessionId = other.sessionId;
       }
@@ -10074,8 +10073,8 @@ public class StreamControlService {
       }
     }
 
-    public getRequestedStreamStatus_args deepCopy() {
-      return new getRequestedStreamStatus_args(this);
+    public getStreamFileDetails_args deepCopy() {
+      return new getStreamFileDetails_args(this);
     }
 
     @Override
@@ -10093,7 +10092,7 @@ public class StreamControlService {
       return this.sessionId;
     }
 
-    public getRequestedStreamStatus_args setSessionId(String sessionId) {
+    public getStreamFileDetails_args setSessionId(String sessionId) {
       this.sessionId = sessionId;
       return this;
     }
@@ -10117,7 +10116,7 @@ public class StreamControlService {
       return this.deviceId;
     }
 
-    public getRequestedStreamStatus_args setDeviceId(String deviceId) {
+    public getStreamFileDetails_args setDeviceId(String deviceId) {
       this.deviceId = deviceId;
       return this;
     }
@@ -10141,7 +10140,7 @@ public class StreamControlService {
       return this.channelId;
     }
 
-    public getRequestedStreamStatus_args setChannelId(String channelId) {
+    public getStreamFileDetails_args setChannelId(String channelId) {
       this.channelId = channelId;
       return this;
     }
@@ -10165,7 +10164,7 @@ public class StreamControlService {
       return this.mediaType;
     }
 
-    public getRequestedStreamStatus_args setMediaType(String mediaType) {
+    public getStreamFileDetails_args setMediaType(String mediaType) {
       this.mediaType = mediaType;
       return this;
     }
@@ -10189,7 +10188,7 @@ public class StreamControlService {
       return this.action;
     }
 
-    public getRequestedStreamStatus_args setAction(String action) {
+    public getStreamFileDetails_args setAction(String action) {
       this.action = action;
       return this;
     }
@@ -10213,7 +10212,7 @@ public class StreamControlService {
       return this.startTimestamp;
     }
 
-    public getRequestedStreamStatus_args setStartTimestamp(String startTimestamp) {
+    public getStreamFileDetails_args setStartTimestamp(String startTimestamp) {
       this.startTimestamp = startTimestamp;
       return this;
     }
@@ -10237,7 +10236,7 @@ public class StreamControlService {
       return this.endTimestamp;
     }
 
-    public getRequestedStreamStatus_args setEndTimestamp(String endTimestamp) {
+    public getStreamFileDetails_args setEndTimestamp(String endTimestamp) {
       this.endTimestamp = endTimestamp;
       return this;
     }
@@ -10374,12 +10373,12 @@ public class StreamControlService {
     public boolean equals(Object that) {
       if (that == null)
         return false;
-      if (that instanceof getRequestedStreamStatus_args)
-        return this.equals((getRequestedStreamStatus_args)that);
+      if (that instanceof getStreamFileDetails_args)
+        return this.equals((getStreamFileDetails_args)that);
       return false;
     }
 
-    public boolean equals(getRequestedStreamStatus_args that) {
+    public boolean equals(getStreamFileDetails_args that) {
       if (that == null)
         return false;
 
@@ -10454,13 +10453,13 @@ public class StreamControlService {
       return 0;
     }
 
-    public int compareTo(getRequestedStreamStatus_args other) {
+    public int compareTo(getStreamFileDetails_args other) {
       if (!getClass().equals(other.getClass())) {
         return getClass().getName().compareTo(other.getClass().getName());
       }
 
       int lastComparison = 0;
-      getRequestedStreamStatus_args typedOther = (getRequestedStreamStatus_args)other;
+      getStreamFileDetails_args typedOther = (getStreamFileDetails_args)other;
 
       lastComparison = Boolean.valueOf(isSetSessionId()).compareTo(typedOther.isSetSessionId());
       if (lastComparison != 0) {
@@ -10549,7 +10548,7 @@ public class StreamControlService {
 
     @Override
     public String toString() {
-      StringBuilder sb = new StringBuilder("getRequestedStreamStatus_args(");
+      StringBuilder sb = new StringBuilder("getStreamFileDetails_args(");
       boolean first = true;
 
       sb.append("sessionId:");
@@ -10631,15 +10630,15 @@ public class StreamControlService {
       }
     }
 
-    private static class getRequestedStreamStatus_argsStandardSchemeFactory implements SchemeFactory {
-      public getRequestedStreamStatus_argsStandardScheme getScheme() {
-        return new getRequestedStreamStatus_argsStandardScheme();
+    private static class getStreamFileDetails_argsStandardSchemeFactory implements SchemeFactory {
+      public getStreamFileDetails_argsStandardScheme getScheme() {
+        return new getStreamFileDetails_argsStandardScheme();
       }
     }
 
-    private static class getRequestedStreamStatus_argsStandardScheme extends StandardScheme<getRequestedStreamStatus_args> {
+    private static class getStreamFileDetails_argsStandardScheme extends StandardScheme<getStreamFileDetails_args> {
 
-      public void read(org.apache.thrift.protocol.TProtocol iprot, getRequestedStreamStatus_args struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol iprot, getStreamFileDetails_args struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TField schemeField;
         iprot.readStructBegin();
         while (true)
@@ -10716,7 +10715,7 @@ public class StreamControlService {
         struct.validate();
       }
 
-      public void write(org.apache.thrift.protocol.TProtocol oprot, getRequestedStreamStatus_args struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol oprot, getStreamFileDetails_args struct) throws org.apache.thrift.TException {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
@@ -10761,16 +10760,16 @@ public class StreamControlService {
 
     }
 
-    private static class getRequestedStreamStatus_argsTupleSchemeFactory implements SchemeFactory {
-      public getRequestedStreamStatus_argsTupleScheme getScheme() {
-        return new getRequestedStreamStatus_argsTupleScheme();
+    private static class getStreamFileDetails_argsTupleSchemeFactory implements SchemeFactory {
+      public getStreamFileDetails_argsTupleScheme getScheme() {
+        return new getStreamFileDetails_argsTupleScheme();
       }
     }
 
-    private static class getRequestedStreamStatus_argsTupleScheme extends TupleScheme<getRequestedStreamStatus_args> {
+    private static class getStreamFileDetails_argsTupleScheme extends TupleScheme<getStreamFileDetails_args> {
 
       @Override
-      public void write(org.apache.thrift.protocol.TProtocol prot, getRequestedStreamStatus_args struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol prot, getStreamFileDetails_args struct) throws org.apache.thrift.TException {
         TTupleProtocol oprot = (TTupleProtocol) prot;
         BitSet optionals = new BitSet();
         if (struct.isSetSessionId()) {
@@ -10819,7 +10818,7 @@ public class StreamControlService {
       }
 
       @Override
-      public void read(org.apache.thrift.protocol.TProtocol prot, getRequestedStreamStatus_args struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol prot, getStreamFileDetails_args struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
         BitSet incoming = iprot.readBitSet(7);
         if (incoming.get(0)) {
@@ -10855,16 +10854,16 @@ public class StreamControlService {
 
   }
 
-  public static class getRequestedStreamStatus_result implements org.apache.thrift.TBase<getRequestedStreamStatus_result, getRequestedStreamStatus_result._Fields>, java.io.Serializable, Cloneable   {
-    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getRequestedStreamStatus_result");
+  public static class getStreamFileDetails_result implements org.apache.thrift.TBase<getStreamFileDetails_result, getStreamFileDetails_result._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getStreamFileDetails_result");
 
     private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.LIST, (short)0);
     private static final org.apache.thrift.protocol.TField CORE_EXP_FIELD_DESC = new org.apache.thrift.protocol.TField("coreExp", org.apache.thrift.protocol.TType.STRUCT, (short)1);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
-      schemes.put(StandardScheme.class, new getRequestedStreamStatus_resultStandardSchemeFactory());
-      schemes.put(TupleScheme.class, new getRequestedStreamStatus_resultTupleSchemeFactory());
+      schemes.put(StandardScheme.class, new getStreamFileDetails_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new getStreamFileDetails_resultTupleSchemeFactory());
     }
 
     public List<com.kaisquare.core.thrift.StreamFileDetails> success; // required
@@ -10941,13 +10940,13 @@ public class StreamControlService {
       tmpMap.put(_Fields.CORE_EXP, new org.apache.thrift.meta_data.FieldMetaData("coreExp", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
-      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getRequestedStreamStatus_result.class, metaDataMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getStreamFileDetails_result.class, metaDataMap);
     }
 
-    public getRequestedStreamStatus_result() {
+    public getStreamFileDetails_result() {
     }
 
-    public getRequestedStreamStatus_result(
+    public getStreamFileDetails_result(
       List<com.kaisquare.core.thrift.StreamFileDetails> success,
       CoreException coreExp)
     {
@@ -10959,7 +10958,7 @@ public class StreamControlService {
     /**
      * Performs a deep copy on <i>other</i>.
      */
-    public getRequestedStreamStatus_result(getRequestedStreamStatus_result other) {
+    public getStreamFileDetails_result(getStreamFileDetails_result other) {
       if (other.isSetSuccess()) {
         List<com.kaisquare.core.thrift.StreamFileDetails> __this__success = new ArrayList<com.kaisquare.core.thrift.StreamFileDetails>();
         for (com.kaisquare.core.thrift.StreamFileDetails other_element : other.success) {
@@ -10972,8 +10971,8 @@ public class StreamControlService {
       }
     }
 
-    public getRequestedStreamStatus_result deepCopy() {
-      return new getRequestedStreamStatus_result(this);
+    public getStreamFileDetails_result deepCopy() {
+      return new getStreamFileDetails_result(this);
     }
 
     @Override
@@ -11001,7 +11000,7 @@ public class StreamControlService {
       return this.success;
     }
 
-    public getRequestedStreamStatus_result setSuccess(List<com.kaisquare.core.thrift.StreamFileDetails> success) {
+    public getStreamFileDetails_result setSuccess(List<com.kaisquare.core.thrift.StreamFileDetails> success) {
       this.success = success;
       return this;
     }
@@ -11025,7 +11024,7 @@ public class StreamControlService {
       return this.coreExp;
     }
 
-    public getRequestedStreamStatus_result setCoreExp(CoreException coreExp) {
+    public getStreamFileDetails_result setCoreExp(CoreException coreExp) {
       this.coreExp = coreExp;
       return this;
     }
@@ -11097,12 +11096,12 @@ public class StreamControlService {
     public boolean equals(Object that) {
       if (that == null)
         return false;
-      if (that instanceof getRequestedStreamStatus_result)
-        return this.equals((getRequestedStreamStatus_result)that);
+      if (that instanceof getStreamFileDetails_result)
+        return this.equals((getStreamFileDetails_result)that);
       return false;
     }
 
-    public boolean equals(getRequestedStreamStatus_result that) {
+    public boolean equals(getStreamFileDetails_result that) {
       if (that == null)
         return false;
 
@@ -11132,13 +11131,13 @@ public class StreamControlService {
       return 0;
     }
 
-    public int compareTo(getRequestedStreamStatus_result other) {
+    public int compareTo(getStreamFileDetails_result other) {
       if (!getClass().equals(other.getClass())) {
         return getClass().getName().compareTo(other.getClass().getName());
       }
 
       int lastComparison = 0;
-      getRequestedStreamStatus_result typedOther = (getRequestedStreamStatus_result)other;
+      getStreamFileDetails_result typedOther = (getStreamFileDetails_result)other;
 
       lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(typedOther.isSetSuccess());
       if (lastComparison != 0) {
@@ -11177,7 +11176,7 @@ public class StreamControlService {
 
     @Override
     public String toString() {
-      StringBuilder sb = new StringBuilder("getRequestedStreamStatus_result(");
+      StringBuilder sb = new StringBuilder("getStreamFileDetails_result(");
       boolean first = true;
 
       sb.append("success:");
@@ -11219,15 +11218,15 @@ public class StreamControlService {
       }
     }
 
-    private static class getRequestedStreamStatus_resultStandardSchemeFactory implements SchemeFactory {
-      public getRequestedStreamStatus_resultStandardScheme getScheme() {
-        return new getRequestedStreamStatus_resultStandardScheme();
+    private static class getStreamFileDetails_resultStandardSchemeFactory implements SchemeFactory {
+      public getStreamFileDetails_resultStandardScheme getScheme() {
+        return new getStreamFileDetails_resultStandardScheme();
       }
     }
 
-    private static class getRequestedStreamStatus_resultStandardScheme extends StandardScheme<getRequestedStreamStatus_result> {
+    private static class getStreamFileDetails_resultStandardScheme extends StandardScheme<getStreamFileDetails_result> {
 
-      public void read(org.apache.thrift.protocol.TProtocol iprot, getRequestedStreamStatus_result struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol iprot, getStreamFileDetails_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TField schemeField;
         iprot.readStructBegin();
         while (true)
@@ -11276,7 +11275,7 @@ public class StreamControlService {
         struct.validate();
       }
 
-      public void write(org.apache.thrift.protocol.TProtocol oprot, getRequestedStreamStatus_result struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol oprot, getStreamFileDetails_result struct) throws org.apache.thrift.TException {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
@@ -11303,16 +11302,16 @@ public class StreamControlService {
 
     }
 
-    private static class getRequestedStreamStatus_resultTupleSchemeFactory implements SchemeFactory {
-      public getRequestedStreamStatus_resultTupleScheme getScheme() {
-        return new getRequestedStreamStatus_resultTupleScheme();
+    private static class getStreamFileDetails_resultTupleSchemeFactory implements SchemeFactory {
+      public getStreamFileDetails_resultTupleScheme getScheme() {
+        return new getStreamFileDetails_resultTupleScheme();
       }
     }
 
-    private static class getRequestedStreamStatus_resultTupleScheme extends TupleScheme<getRequestedStreamStatus_result> {
+    private static class getStreamFileDetails_resultTupleScheme extends TupleScheme<getStreamFileDetails_result> {
 
       @Override
-      public void write(org.apache.thrift.protocol.TProtocol prot, getRequestedStreamStatus_result struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol prot, getStreamFileDetails_result struct) throws org.apache.thrift.TException {
         TTupleProtocol oprot = (TTupleProtocol) prot;
         BitSet optionals = new BitSet();
         if (struct.isSetSuccess()) {
@@ -11337,7 +11336,7 @@ public class StreamControlService {
       }
 
       @Override
-      public void read(org.apache.thrift.protocol.TProtocol prot, getRequestedStreamStatus_result struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol prot, getStreamFileDetails_result struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
